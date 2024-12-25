@@ -1,10 +1,11 @@
 import { AiOutlineCodeSandbox } from "react-icons/ai";
-
+import { Link } from "react-router-dom";
 function CartWidget(){
     return (
         <div>
             <div>
-                <AiOutlineCodeSandbox />
+                
+                <Link to="/"><AiOutlineCodeSandbox /></Link>
             </div>
            
             1

@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom"
 
-
-function Boton({titulo}){
+function Boton({titulo , id}){
     return(
-        <button>{titulo}</button>
+        <Link to={`/category/${id}`}>{titulo}</Link>
     )
 }
 

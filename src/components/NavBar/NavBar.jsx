@@ -13,16 +13,16 @@ function NavBar () {
 
             <div class="navbar-end">
                 <div class="navbar-item">
-                        <Boton titulo="opcion1"/>
+                        <Boton titulo="electrodomesticos" id="1"/>
                 </div>
                 <div class="navbar-item">
-                        <Boton titulo="opcion2"/>
+                        <Boton titulo="libros" id="2"/>
                 </div>
                 <div class="navbar-item">
-                        <Boton titulo="opcion3"/>
+                        <Boton titulo="zapatillas" id="3"/>
                 </div>
             </div>
-           
+
         </nav>
     )
 }
