@@ -1,26 +1,57 @@
+import "./productos.css";
+import ItemDetail from "./ItemDetail";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import listaProductos from "../data/productos";
-import "./productos.css"
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../Service/firebaseConfig";
 
 function ItemsDetailsContainer() {
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const { itemId } = useParams();
+
+  useEffect(() => {
+
+
+    setLoading(true);
+
+    const docRef = doc(db, "products", String(itemId));
+
   
-  const { id } = useParams()
-  
-  const producto = listaProductos.find((producto) => producto.id === parseInt(id));
+    getDoc(docRef)
+      .then((response) => {
+        if (response.exists()) {
+          const data = response.data();
+          const productAdapted = { id: response.id, ...data };
+          setProduct(productAdapted);
+        } else {
+          console.log("No se encontró el producto");
+          setProduct(null);
+        }
+      })
+      .catch((error) => {
+        console.log("Error obteniendo el producto:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [itemId]);
+
+  if (loading) {
+    return <h2>Cargando producto...</h2>;
+  }
+
+  if (!product) {
+    return <h3>Producto no encontrado</h3>;
+  }
+
   return (
-    <div className="container">
+    <div className="container ItemDetailContainer">
       <h1 className="title">Producto</h1>
-      <div>
-         
-        <article key={producto.id} className="box">
-            <h5>{producto.title}</h5>
-            <img src={producto.image} alt={producto.title} />
-            <p>{producto.description}</p>
-        </article>
-    
-      </div>
+      <ItemDetail {...product} />
     </div>
-  )
+  );
 }
 
 export default ItemsDetailsContainer;
